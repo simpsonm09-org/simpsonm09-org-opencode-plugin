@@ -447,6 +447,7 @@ test("a PreToolUse run that runs out of time denies a write and passes a read", 
 test("the PreToolUse entry point blocks a write with no working directory, with JSON on stdout", () => {
   const script = join(repoDir, "hooks", "pre-tool-use.mjs");
   const result = spawnSync(process.execPath, [script], {
+    windowsHide: true,
     input: JSON.stringify({
       tool_name: "Bash",
       tool_input: { command: "git push origin main" },
@@ -463,6 +464,7 @@ test("the PreToolUse entry point blocks a write with no working directory, with 
 test("the PreToolUse entry point exits 2 on malformed stdin", () => {
   const script = join(repoDir, "hooks", "pre-tool-use.mjs");
   const result = spawnSync(process.execPath, [script], {
+    windowsHide: true,
     input: "{",
     encoding: "utf8",
   });
@@ -473,6 +475,7 @@ test("the PreToolUse entry point exits 2 on malformed stdin", () => {
 test("the SessionStart entry point never blocks a session", () => {
   const script = join(repoDir, "hooks", "session-start.mjs");
   const result = spawnSync(process.execPath, [script], {
+    windowsHide: true,
     input: "{",
     encoding: "utf8",
   });

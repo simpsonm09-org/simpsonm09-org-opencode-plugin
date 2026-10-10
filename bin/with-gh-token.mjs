@@ -199,7 +199,7 @@ function childHost(shell, env, options) {
  */
 function runChild(file, args, env, log) {
   return new Promise((resolveExit) => {
-    const child = spawn(file, args, { stdio: "inherit", env });
+    const child = spawn(file, args, { windowsHide: true, stdio: "inherit", env });
     const stop = (signal) => {
       if (child.exitCode === null && child.signalCode === null)
         child.kill(signal);

@@ -258,6 +258,7 @@ test("a PascalCase payload from the PowerShell tool is denied with the same reas
 
 test("the PreToolUse entry point answers the PascalCase refusal as JSON on stdout, with exit 0", () => {
   const result = spawnSync(process.execPath, [PRE_ENTRY, "copilot"], {
+    windowsHide: true,
     input: JSON.stringify(MEASURED.pascalProbe(cwdOf(DEMO))),
     encoding: "utf8",
   });
@@ -318,6 +319,7 @@ test("the PreToolUse entry point exits 2 on a malformed payload, with the reason
     JSON.stringify({ toolName: "bash", toolArgs: {} }),
   ]) {
     const result = spawnSync(process.execPath, [PRE_ENTRY, "copilot"], {
+      windowsHide: true,
       input,
       encoding: "utf8",
     });
@@ -329,6 +331,7 @@ test("the PreToolUse entry point exits 2 on a malformed payload, with the reason
 
 test("the PreToolUse entry point answers a measured push to main as JSON on stdout, with exit 0", () => {
   const result = spawnSync(process.execPath, [PRE_ENTRY, "copilot"], {
+    windowsHide: true,
     input: JSON.stringify(pushMain(undefined)),
     encoding: "utf8",
   });
@@ -343,6 +346,7 @@ test("the PreToolUse entry point answers a measured push to main as JSON on stdo
 
 test("the PreToolUse entry point passes a measured command outside the fleet with no output", () => {
   const result = spawnSync(process.execPath, [PRE_ENTRY, "copilot"], {
+    windowsHide: true,
     input: JSON.stringify(MEASURED.powershellProbe(tmpdir())),
     encoding: "utf8",
   });
@@ -352,6 +356,7 @@ test("the PreToolUse entry point passes a measured command outside the fleet wit
 
 test("a PreToolUse entry point started with an unknown runtime fails closed", () => {
   const result = spawnSync(process.execPath, [PRE_ENTRY, "nonsense"], {
+    windowsHide: true,
     input: JSON.stringify(MEASURED.powershellProbe(tmpdir())),
     encoding: "utf8",
   });
@@ -465,6 +470,7 @@ test("the measured sessionStart payload gets additionalContext for a fleet repos
 
 test("the SessionStart entry point never blocks, and prints nothing for a malformed payload", () => {
   const result = spawnSync(process.execPath, [SESSION_ENTRY, "copilot"], {
+    windowsHide: true,
     input: "{",
     encoding: "utf8",
   });

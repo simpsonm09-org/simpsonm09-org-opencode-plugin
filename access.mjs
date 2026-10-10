@@ -147,6 +147,7 @@ function accessFromCli(script, repo, command, remoteUrl) {
   if (remoteUrl) args.push("--remote-url", remoteUrl);
   try {
     const stdout = execFileSync(nodeRunner(process.execPath), args, {
+      windowsHide: true,
       encoding: "utf8",
       timeout: timeoutFor(CHILD_TIMEOUT_MS),
     });
@@ -276,6 +277,7 @@ async function mintFromCli(script, repo) {
       nodeRunner(process.execPath),
       [script, `${OWNER}/${repo}`, "--json"],
       {
+        windowsHide: true,
         encoding: "utf8",
         stdio: ["ignore", "pipe", "ignore"],
         timeout: timeoutFor(MINT_TIMEOUT_MS),
@@ -301,6 +303,7 @@ async function mintFromCli(script, repo) {
 export function gitRemoteUrl(remote, cwd) {
   return remoteUrlFor(remote, cwd, (args) =>
     execFileSync("git", args, {
+      windowsHide: true,
       encoding: "utf8",
       stdio: ["ignore", "pipe", "ignore"],
       timeout: timeoutFor(CHILD_TIMEOUT_MS),

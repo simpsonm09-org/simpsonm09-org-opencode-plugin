@@ -23,7 +23,9 @@ before(() => {
   // A repository that is not a fleet clone, and a worktree of it.
   const solo = join(ws, "projects", "other", "solo");
   mkdirSync(solo, { recursive: true });
-  execFileSync("git", ["-C", solo, "init", "--quiet", "-b", "main"]);
+  execFileSync("git", ["-C", solo, "init", "--quiet", "-b", "main"], {
+    windowsHide: true,
+  });
   execFileSync(
     "git",
     [
@@ -39,6 +41,7 @@ before(() => {
       "init",
     ],
     {
+      windowsHide: true,
       env: {
         ...process.env,
         GIT_AUTHOR_NAME: "f",
@@ -48,16 +51,20 @@ before(() => {
       },
     },
   );
-  execFileSync("git", [
-    "-C",
-    solo,
-    "worktree",
-    "add",
-    "--quiet",
-    "-b",
-    "wt-solo",
-    join(ws, "projects", "worktrees", "wt-solo"),
-  ]);
+  execFileSync(
+    "git",
+    [
+      "-C",
+      solo,
+      "worktree",
+      "add",
+      "--quiet",
+      "-b",
+      "wt-solo",
+      join(ws, "projects", "worktrees", "wt-solo"),
+    ],
+    { windowsHide: true },
+  );
 });
 
 after(() => {

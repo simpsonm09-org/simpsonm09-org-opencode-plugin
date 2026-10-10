@@ -57,6 +57,7 @@ export function loadCommittedCatalog(dir = CATALOG_DIR) {
         "git",
         ["-C", dir, "show", `${ref}:repos.json`],
         {
+          windowsHide: true,
           encoding: "utf8",
           stdio: ["ignore", "pipe", "ignore"],
         },
