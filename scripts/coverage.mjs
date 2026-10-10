@@ -16,7 +16,7 @@ const result = spawnSync(
     "--test-reporter=lcov",
     "--test-reporter-destination=coverage/lcov.info",
   ],
-  { stdio: "inherit" },
+  { windowsHide: true, stdio: "inherit" },
 );
 if (result.error) {
   process.stderr.write(`coverage: cannot run node: ${result.error.message}\n`);

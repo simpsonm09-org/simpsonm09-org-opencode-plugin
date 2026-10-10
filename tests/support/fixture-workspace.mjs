@@ -77,6 +77,7 @@ function git(cwd, args) {
     GIT_COMMITTER_EMAIL: "fixture@example.invalid",
   };
   return execFileSync("git", ["-c", "commit.gpgsign=false", ...args], {
+    windowsHide: true,
     cwd,
     env: { ...process.env, ...identity },
     encoding: "utf8",

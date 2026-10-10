@@ -342,9 +342,11 @@ test("the context callback leaves a cwd outside the fleet alone", async () => {
 function realFleetClone(name: string, remotes: Record<string, string>) {
   const dir = join(reposRoot, name);
   rmSync(dir, { recursive: true, force: true });
-  execFileSync("git", ["init", "-q", dir]);
+  execFileSync("git", ["init", "-q", dir], { windowsHide: true });
   for (const [remote, url] of Object.entries(remotes)) {
-    execFileSync("git", ["-C", dir, "remote", "add", remote, url]);
+    execFileSync("git", ["-C", dir, "remote", "add", remote, url], {
+      windowsHide: true,
+    });
   }
   return { dir, cleanup: () => rmSync(dir, { recursive: true, force: true }) };
 }

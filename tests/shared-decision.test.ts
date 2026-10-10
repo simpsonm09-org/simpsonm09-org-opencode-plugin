@@ -3,6 +3,7 @@
 // rules both harnesses use, so each is asserted directly, not only through a harness.
 
 import assert from "node:assert/strict";
+import { writeFileSync } from "node:fs";
 import { join, resolve } from "node:path";
 import { test } from "node:test";
 import { levelFor, resolveAccess, tokenFor } from "../access.mjs";
@@ -16,6 +17,7 @@ import {
   isWorktreePath,
   shouldInject,
 } from "../gate.mjs";
+import { removeDir, tempDir } from "./support/fixture-workspace.mjs";
 
 const ws = resolve("ws-root");
 const cwd = join(ws, "projects", "repos", "demo-repo");
@@ -270,6 +272,20 @@ test("a broker that fails or returns no token yields no token", async () => {
   const empty = { mintForRepo: async () => ({ token: "", expires_at: "" }) };
   assert.equal(await tokenFor(failing, "", "gamma-repo"), null);
   assert.equal(await tokenFor(empty, "", "delta-repo"), null);
+});
+
+test("a broker script that only ships a CLI mints its token in a Node child process", async () => {
+  const dir = tempDir("broker-cli-");
+  try {
+    const script = join(dir, "agent-token.mjs");
+    writeFileSync(
+      script,
+      'process.stdout.write(JSON.stringify({ token: "cli-token", expires_at: "2099-01-01T00:00:00Z" }));\n',
+    );
+    assert.equal(await tokenFor(null, script, "cli-repo"), "cli-token");
+  } finally {
+    removeDir(dir);
+  }
 });
 
 test("a resolver module that throws is an unknown answer, not a crash", () => {

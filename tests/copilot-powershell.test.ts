@@ -98,6 +98,7 @@ async function runFromCopilotPowerShell(command: string) {
       Buffer.from(answer.modifiedArgs.command, "utf16le").toString("base64"),
     ],
     {
+      windowsHide: true,
       cwd: demo,
       encoding: "utf8",
       env: {

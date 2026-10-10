@@ -5,7 +5,7 @@ import { pathToFileURL } from "node:url";
 const BASE = "main";
 
 function git(args) {
-  const result = spawnSync("git", args, { encoding: "utf8" });
+  const result = spawnSync("git", args, { windowsHide: true, encoding: "utf8" });
   return {
     status: result.error ? 127 : (result.status ?? 1),
     stdout: result.stdout ?? "",

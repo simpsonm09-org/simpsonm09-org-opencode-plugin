@@ -57,7 +57,9 @@ before(() => {
   buildWorkspace(ws, { level: "read" });
   demo = cwdOf("projects/repos/demo-repo");
   // The organization remote, so a push to `upstream` is a push to the protected repository.
-  execFileSync("git", ["-C", demo, "remote", "add", "upstream", ORG_URL]);
+  execFileSync("git", ["-C", demo, "remote", "add", "upstream", ORG_URL], {
+    windowsHide: true,
+  });
 });
 
 after(() => {

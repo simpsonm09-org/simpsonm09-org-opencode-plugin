@@ -110,6 +110,7 @@ test("claude plugin validate accepts the plugin, when the CLI is installed", (t)
   const env = { ...process.env, CLAUDE_CONFIG_DIR: config };
   try {
     const probe = spawnSync("claude", ["--version"], {
+      windowsHide: true,
       encoding: "utf8",
       shell: true,
       env,
@@ -117,6 +118,7 @@ test("claude plugin validate accepts the plugin, when the CLI is installed", (t)
     });
     if (probe.status !== 0) return t.skip("the claude CLI is not installed");
     const result = spawnSync("claude", ["plugin", "validate", root], {
+      windowsHide: true,
       encoding: "utf8",
       shell: true,
       env,
